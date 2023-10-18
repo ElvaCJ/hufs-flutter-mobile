@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
@@ -11,11 +13,26 @@ void main() {
   );
 }
 
-class testWidget extends StatelessWidget {
+class testWidget extends StatefulWidget {
   const testWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<testWidget> createState() => _testWidgetState();
+}
+
+class _testWidgetState extends State<testWidget> {
+  final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      onTick(timer);
+    });
+  }
+   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
@@ -57,29 +74,34 @@ class testWidget extends StatelessWidget {
               ),
             ],
           ),
+          Text(
+            DateTime.now().toString(),
+            style: TextStyle(fontSize: 32, color: Colors.black,),
+          ),
           Stack(
             children: [
               Container(
-                width: 270,
-                height: 270,
+                width: 250,
+                height: 250,
                 color: Colors.lightGreen,
               ),
               Container(
                 transform: Matrix4.rotationZ(0.2),
-                width: 210,
-                height: 210,
+                width: 220,
+                height: 220,
                 color: Colors.amberAccent,
               ),
               Container(
                 transform: Matrix4.rotationZ(0.4),
-                width: 150,
-                height: 150,
+                width: 200,
+                height: 200,
                 color: Colors.white60,
                 child: AnalogClock(
+                  key: _analogClockKey,
                   dialColor: null,
                   markingColor: Colors.brown,
                   hourNumberColor: Colors.brown,
-                  secondHandColor: null,
+                  secondHandColor: Colors.indigo,
                 ),
               ),
               Text(
@@ -91,5 +113,12 @@ class testWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void onTick(Timer timer) {
+    print(DateTime.now().toString());
+    setState(() {
+      _analogClockKey.currentState!.dateTime=DateTime.now();
+    });
   }
 }

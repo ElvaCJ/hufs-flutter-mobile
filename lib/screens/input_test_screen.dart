@@ -18,12 +18,44 @@ class _InputTestScreenState extends State<InputTestScreen> {
         children: [
           CheckBoxTest(),
           CheckBoxTest(),
-          CheckBoxTest(),
+          RadioButtonTest(),
+          RadioButtonTest(),
         ],
       ),
     );
   }
 }
+
+enum TestValues {R1, R2, R3}
+
+class RadioButtonTest extends StatefulWidget {
+  const RadioButtonTest({super.key});
+
+  @override
+  State<RadioButtonTest> createState() => _RadioButtonTestState();
+}
+
+class _RadioButtonTestState extends State<RadioButtonTest> {
+  TestValues? selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Radio<TestValues>(value: TestValues.R1,groupValue: selectedValue, onChanged: (value) => setState(() {
+          selectedValue = value;
+        })),
+        Radio<TestValues>(value: TestValues.R2,groupValue: selectedValue, onChanged: (value) => setState(() {
+          selectedValue = value;
+        })),
+        Radio<TestValues>(value: TestValues.R3,groupValue: selectedValue, onChanged: (value) => setState(() {
+          selectedValue = value;
+        })),
+      ],
+    );
+  }
+}
+
 
 class CheckBoxTest extends StatefulWidget {
   const CheckBoxTest({super.key});

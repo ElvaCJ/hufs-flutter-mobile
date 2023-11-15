@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/main.dart';
 import 'package:mobile_project/screens/input_test_screen.dart';
 import 'package:mobile_project/screens/test_widget_screen.dart';
+import 'package:mobile_project/screens/weather_screen.dart';
 
 class NavTestScreen extends StatefulWidget {
   const NavTestScreen({super.key});
@@ -61,6 +62,19 @@ class _NavTestScreen extends State<NavTestScreen> {
               ),
               child: const Text(
                 'Test Input Screen',
+                style: TextStyle(fontSize: 26),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WeatherScreen()),
+              ),
+              child: const Text(
+                'Weather API',
                 style: TextStyle(fontSize: 26),
               ),
             ),

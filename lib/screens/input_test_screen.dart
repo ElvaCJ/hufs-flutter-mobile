@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InputTestScreen extends StatefulWidget {
@@ -14,14 +17,125 @@ class _InputTestScreenState extends State<InputTestScreen> {
       appBar: AppBar(
         title: const Text('Test Input Widget'),
       ),
-      body: const Column(
+      body: Column(
         children: [
           CheckBoxTest(),
           CheckBoxTest(),
           RadioButtonTest(),
           RadioButtonTest(),
+          SliderTest(),
+          SwitchTest(),
+          PopupTest(),
         ],
       ),
+    );
+  }
+}
+
+class PopupTest extends StatefulWidget {
+  const PopupTest({super.key});
+
+  @override
+  State<PopupTest> createState() => _PopupTestState();
+}
+
+class _PopupTestState extends State<PopupTest> {
+  TestValues selectedValue = TestValues.R1;
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        return TestValues.values
+            .map(
+                (value) => PopupMenuItem(value: value, child: Text(value.name)))
+            .toList();
+      },
+      onSelected: (newValue) => setState(() => selectedValue = newValue),
+    );
+  }
+}
+
+class SwitchTest extends StatefulWidget {
+  const SwitchTest({super.key});
+
+  @override
+  State<SwitchTest> createState() => _SwitchTestState();
+}
+
+class _SwitchTestState extends State<SwitchTest> {
+  late List<bool> values;
+
+  @override
+  void initState() {
+    super.initState();
+    values = [false, false, false];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            Switch(value: values[0],
+                onChanged: (value) => onChanged(0, value: value)),
+            CupertinoSwitch(value: values[0],
+                onChanged: (value) => onChanged(0, value: value)),
+          ],
+        ),
+        Column(
+          children: [
+            Switch(value: values[1],
+                onChanged: (value) => onChanged(1, value: value)),
+            CupertinoSwitch(value: values[1],
+                onChanged: (value) => onChanged(1, value: value)),
+          ],
+        ),
+        Column(
+          children: [
+            Switch(value: values[2],
+                onChanged: (value) => onChanged(2, value: value)),
+            CupertinoSwitch(value: values[2],
+                onChanged: (value) => onChanged(2, value: value)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void onChanged(int index, {bool? value = false}) {
+    setState(() {
+      values[index] = value!;
+    });
+  }
+}
+
+
+class SliderTest extends StatefulWidget {
+  const SliderTest({super.key});
+
+  @override
+  State<SliderTest> createState() => _SliderTestState();
+}
+
+class _SliderTestState extends State<SliderTest> {
+  double value = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('$value'),
+        Slider(
+          value: value,
+          onChanged: (newValue) => setState(() {value = newValue;}),
+          label: value.round().toString(),
+          divisions: 100,
+          max: 0,
+          min: 0,
+        ),
+      ],
     );
   }
 }
@@ -55,7 +169,6 @@ class _RadioButtonTestState extends State<RadioButtonTest> {
     );
   }
 }
-
 
 class CheckBoxTest extends StatefulWidget {
   const CheckBoxTest({super.key});

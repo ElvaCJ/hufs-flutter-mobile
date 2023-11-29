@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/main.dart';
 import 'package:mobile_project/screens/input_test_screen.dart';
+import 'package:mobile_project/screens/search_screen.dart';
 import 'package:mobile_project/screens/test_widget_screen.dart';
 import 'package:mobile_project/screens/weather_screen.dart';
 
@@ -75,6 +76,16 @@ class _NavTestScreen extends State<NavTestScreen> {
               ),
               child: const Text(
                 'Weather API',
+                style: TextStyle(fontSize: 26),
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchScreen()),
+              ),
+              child: const Text(
+                'NAVER Search API',
                 style: TextStyle(fontSize: 26),
               ),
             ),
